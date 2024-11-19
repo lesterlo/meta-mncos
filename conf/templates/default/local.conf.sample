@@ -5,6 +5,11 @@ LICENSE_FLAGS_ACCEPTED = " \
     xilinx \
     "
 
+# For slow computer, you should reduce the bb number of threads
+# BB_NUMBER_THREADS = "2"
+
+HDF_BASE = "file://"
+HDF_PATH = "<Path-to-xsa-file>"
 
 # Disk Space Monitoring during the build
 BB_DISKMON_DIRS ??= "\

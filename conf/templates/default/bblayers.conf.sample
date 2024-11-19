@@ -6,6 +6,7 @@ BBLAYERS ?= " \
   ##OEROOT##/meta \
   ##OEROOT##/meta-poky \
   ##OEROOT##/meta-yocto-bsp \
+  \
   ##OEROOT##/../meta-xilinx/meta-xilinx-core \
   ##OEROOT##/../meta-xilinx/meta-xilinx-contrib \
   ##OEROOT##/../meta-xilinx/meta-xilinx-standalone \
@@ -13,9 +14,13 @@ BBLAYERS ?= " \
   ##OEROOT##/../meta-xilinx/meta-xilinx-bsp \
   ##OEROOT##/../meta-xilinx/meta-xilinx-vendor \
   ##OEROOT##/../meta-xilinx-tools \
-  ##OEROOT##/../meta-openembedded/meta-oe \
   ##OEROOT##/../meta-openamp \
-  ##OEROOT##/../meta-zuboard \
+  \
+  ##OEROOT##/../meta-openembedded/meta-oe \
   ##OEROOT##/../meta-openembedded/meta-python \
   ##OEROOT##/../meta-openembedded/meta-networking \
+  \
+  ##OEROOT##/../meta-mncux \
+  \
+  ##OEROOT##/../meta-zuboard \
   "
