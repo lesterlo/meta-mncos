@@ -1,3 +1,5 @@
+### Shell environment set up for MNCux build. ###
+
 You can now run 'bitbake <target>'
 
 Common targets are:
