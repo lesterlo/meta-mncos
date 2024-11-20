@@ -9,8 +9,10 @@ HDF_BASE = "file://"
 HDF_PATH = "<Path-to-xsa-file>"
 
 
+# Bibake settings
 # For slow Disk IO computer, you should reduce the bb number of threads
 # BB_NUMBER_THREADS = "2"
+BB_FETCH_RETRY = "10"
 
 # Accept the license
 LICENSE_FLAGS_ACCEPTED = " \
