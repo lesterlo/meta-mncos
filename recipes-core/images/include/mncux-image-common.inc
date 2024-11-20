@@ -20,10 +20,7 @@ APP_COMMON_INSTALL = " \
     htop \
     "
 
-IMAGE_INSTALL = " \
-    packagegroup-core-boot \
-    ${CORE_IMAGE_EXTRA_INSTALL} \
-    \
+IMAGE_INSTALL:append = " \
     ${COMMON_INSTALL} \
     ${LIB_COMMON_INSTALL} \
     ${APP_COMMON_INSTALL} \
