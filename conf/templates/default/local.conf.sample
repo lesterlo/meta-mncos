@@ -12,6 +12,9 @@ HDF_PATH = "<Path-to-xsa-file>"
 # For slow Disk IO computer, you should reduce the bb number of threads
 # BB_NUMBER_THREADS = "2"
 
+# sstate cachie directories
+#SSTATE_DIR ?= "/tmp/yocto_share/"
+
 
 # Accept the license
 LICENSE_FLAGS_ACCEPTED = " \
