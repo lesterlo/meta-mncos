@@ -12,10 +12,6 @@ HDF_PATH = "<Path-to-xsa-file>"
 # For slow Disk IO computer, you should reduce the bb number of threads
 # BB_NUMBER_THREADS = "2"
 
-# sstate cachie directories
-#SSTATE_DIR ?= "/tmp/yocto_share/"
-
-
 # Accept the license
 LICENSE_FLAGS_ACCEPTED = " \
     xilinx \
@@ -76,7 +72,7 @@ LICENSE_FLAGS_ACCEPTED = " \
 #
 # The default is a downloads directory under TOPDIR which is the build directory.
 #
-#DL_DIR ?= "${TOPDIR}/downloads"
+DL_DIR ?= "/tmp/yocto/downloads/scarthgap"
 
 #
 # Where to place shared-state files
@@ -92,7 +88,7 @@ LICENSE_FLAGS_ACCEPTED = " \
 #
 # The default is a sstate-cache directory under TOPDIR.
 #
-#SSTATE_DIR ?= "${TOPDIR}/sstate-cache"
+SSTATE_DIR ?= "/tmp/yocto/sstate-cache/scarthgap"
 
 #
 # Where to place the build output
