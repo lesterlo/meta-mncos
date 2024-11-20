@@ -1,5 +1,7 @@
 ### Shell environment set up for MNCux build. ###
 
+# ! For xilinx fpga machine, please set the HDF_PATH to your (.xsa) file location
+
 You can now run 'bitbake <target>'
 
 Common targets are:
