@@ -5,8 +5,8 @@ DISTRO ?= "mncux"
 
 
 # ZYNQ Vivido .xsa file
-HDF_BASE = "file://"
-HDF_PATH = "<Path-to-xsa-file>"
+HDF_BASE:zub = "file://"
+HDF_PATH:zub = "<Path-to-xsa-file>"
 
 
 # Bibake settings
