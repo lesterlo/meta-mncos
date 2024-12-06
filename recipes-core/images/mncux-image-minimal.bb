@@ -19,4 +19,4 @@ do_copy_sdk() {
     cp ${SDK_DEPLOY}/*.sh ${DEST_DIR}/ || true
 }
 
-addtask copy_sdk after do_populate_sdk before do_build
+addtask copy_sdk after do_populate_sdk
