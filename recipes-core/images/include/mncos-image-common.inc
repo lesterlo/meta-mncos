@@ -3,6 +3,7 @@ inherit core-image
 COMMON_INSTALL = " \
     u-boot-tools \
     openssl \
+    jq \
     "
 LIB_COMMON_INSTALL = " \
     net-snmp \
