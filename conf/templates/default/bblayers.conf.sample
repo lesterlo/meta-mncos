@@ -20,7 +20,7 @@ BBLAYERS ?= " \
   ##OEROOT##/../meta-openembedded/meta-python \
   ##OEROOT##/../meta-openembedded/meta-networking \
   \
-  ##OEROOT##/../meta-mncux \
+  ##OEROOT##/../meta-mncos \
   \
   ##OEROOT##/../meta-zuboard \
   "

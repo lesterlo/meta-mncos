@@ -1,4 +1,4 @@
-# meta-mncux
+# meta-mncos
 
 
 

@@ -1,11 +1,11 @@
-### Shell environment set up for MNCux build. ###
+### Shell environment set up for MNCos build. ###
 
-# ! For xilinx fpga machine, please set the HDF_PATH to your (.xsa) file location
+# ! For xilinx fpga machine, please set the HDF_PATH to your (.xsa) file location in build/local.conf
 
 You can now run 'bitbake <target>'
 
 Common targets are:
-    mncux-image-minimal
+    mncos-image-minimal
 
 You can also run generated qemu images with a command like 'runqemu qemux86-64'.
 

@@ -1,7 +1,7 @@
-DESCRIPTION = "Minimal image of MNCux"
+DESCRIPTION = "Minimal image of Monutchee OS"
 LICENSE = "MIT"
 
-require include/mncux-image-common.inc
+require include/mncos-image-common.inc
 
 # Function to copy the .WIC.XZ image to export/
 do_copy_wic_image() {

@@ -1,7 +1,7 @@
 
 # Basic setting
 MACHINE ??= "zub"
-DISTRO ?= "mncux"
+DISTRO ?= "mncos"
 
 
 # ZYNQ Vivido .xsa file
@@ -74,7 +74,7 @@ LICENSE_FLAGS_ACCEPTED = " \
 #
 # The default is a downloads directory under TOPDIR which is the build directory.
 #
-DL_DIR ?= "/tmp/yocto/downloads/scarthgap"
+DL_DIR ?= "/mnt/shared/yocto/downloads/scarthgap"
 
 #
 # Where to place shared-state files
@@ -90,7 +90,7 @@ DL_DIR ?= "/tmp/yocto/downloads/scarthgap"
 #
 # The default is a sstate-cache directory under TOPDIR.
 #
-SSTATE_DIR ?= "/tmp/yocto/sstate-cache/scarthgap"
+SSTATE_DIR ?= "/mnt/shared/yocto/sstate-cache/scarthgap"
 
 #
 # Where to place the build output
