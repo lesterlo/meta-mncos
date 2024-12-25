@@ -6,8 +6,9 @@ BBLAYERS ?= " \
   ##OEROOT##/meta \
   ##OEROOT##/meta-poky \
   ##OEROOT##/meta-yocto-bsp \
-  ##OEROOT##/meta-arm \
-  ##OEROOT##/meta-arm-toolchain \
+  \
+  ##OEROOT##/../meta-arm \
+  ##OEROOT##/../meta-arm-toolchain \
   \
   ##OEROOT##/../meta-xilinx/meta-xilinx-core \
   ##OEROOT##/../meta-xilinx/meta-xilinx-standalone \
