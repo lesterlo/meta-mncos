@@ -5,8 +5,10 @@ DISTRO ?= "mncos"
 
 
 # ZYNQ Vivido .xsa file
+XILINX_WITH_ESW = "sdt"
 HDF_BASE:zub = "file://"
 HDF_PATH:zub = "<Path-to-xsa-file>"
+
 
 
 # Bibake settings
