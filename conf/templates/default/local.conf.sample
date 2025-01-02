@@ -20,6 +20,11 @@ BB_FETCH_RETRY = "10"
 LICENSE_FLAGS_ACCEPTED = " \
     xilinx \
     "
+    
+# Xilinx gen-machineconf recommand settings
+SKIP_META_VIRT_SANITY_CHECK = "1"
+SKIP_META_SECURITY_SANITY_CHECK = "1"
+SKIP_META_TPM_SANITY_CHECK = "1"
 
 #
 # This file is your local configuration file and is where all local user settings
