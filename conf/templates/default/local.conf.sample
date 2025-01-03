@@ -1,6 +1,8 @@
 
 # Basic setting
-MACHINE ??= "zynqmp-zuboard-sdt-full"
+
+# For the machine, change it to the output name from gen-machineconf 
+MACHINE ??= "qemux86"
 DISTRO ?= "mncos"
 
 
