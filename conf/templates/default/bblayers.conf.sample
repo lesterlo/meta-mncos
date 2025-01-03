@@ -16,7 +16,6 @@ BBLAYERS ?= " \
   ##OEROOT##/../meta-xilinx/meta-xilinx-standalone-sdt \
   ##OEROOT##/../meta-xilinx/meta-microblaze \
   ##OEROOT##/../meta-xilinx/meta-xilinx-bsp \
-  ##OEROOT##/../meta-xilinx-tools \ 
   \
   ##OEROOT##/../meta-openamp \
   \
