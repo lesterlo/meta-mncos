@@ -2,7 +2,7 @@
 # Basic setting
 
 # For the machine, change it to the output name from gen-machineconf 
-MACHINE ??= "qemux86"
+MACHINE ??= "qemuarm86"
 DISTRO ?= "mncos"
 
 
