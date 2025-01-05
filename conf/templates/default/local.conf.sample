@@ -9,6 +9,7 @@ DISTRO ?= "mncos"
 # Bibake settings
 # For slow Disk IO computer, you should reduce the bb number of threads
 BB_NUMBER_THREADS = "2"
+PARALLEL_MAKE = "-j 2"
 BB_FETCH_RETRY = "10"
 
 # Accept the license
