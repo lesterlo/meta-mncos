@@ -1,23 +1,26 @@
 
 # Basic setting
-MACHINE ??= "zub"
+
+# For the machine, change it to the output name from gen-machineconf 
+MACHINE ??= "qemuarm64"
 DISTRO ?= "mncos"
-
-
-# ZYNQ Vivido .xsa file
-HDF_BASE:zub = "file://"
-HDF_PATH:zub = "<Path-to-xsa-file>"
 
 
 # Bibake settings
 # For slow Disk IO computer, you should reduce the bb number of threads
-# BB_NUMBER_THREADS = "2"
+BB_NUMBER_THREADS = "2"
+PARALLEL_MAKE = "-j 2"
 BB_FETCH_RETRY = "10"
 
 # Accept the license
 LICENSE_FLAGS_ACCEPTED = " \
     xilinx \
     "
+    
+# Xilinx gen-machineconf recommand settings
+SKIP_META_VIRT_SANITY_CHECK = "1"
+SKIP_META_SECURITY_SANITY_CHECK = "1"
+SKIP_META_TPM_SANITY_CHECK = "1"
 
 #
 # This file is your local configuration file and is where all local user settings
