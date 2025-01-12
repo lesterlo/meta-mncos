@@ -2,6 +2,7 @@ inherit core-image
 
 COMMON_INSTALL = " \
     u-boot-tools \
+    u-boot-fw-utils \
     openssl \
     jq \
     "
