@@ -6,6 +6,7 @@ COMMON_INSTALL = " \
     libubootenv \
     openssl \
     jq \
+    rsyslog \
     "
 LIB_COMMON_INSTALL = " \
     net-snmp \
