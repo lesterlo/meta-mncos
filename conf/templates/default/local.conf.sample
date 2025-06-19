@@ -18,6 +18,7 @@ LICENSE_FLAGS_ACCEPTED = " \
     "
     
 # Xilinx gen-machineconf recommand settings
+XILINX_WITH_ESW = "sdt"
 SKIP_META_VIRT_SANITY_CHECK = "1"
 SKIP_META_SECURITY_SANITY_CHECK = "1"
 SKIP_META_TPM_SANITY_CHECK = "1"
