@@ -78,7 +78,7 @@ SKIP_META_TPM_SANITY_CHECK = "1"
 #
 # The default is a downloads directory under TOPDIR which is the build directory.
 #
-DL_DIR ?= "/mnt/shared/yocto/downloads/scarthgap"
+#DL_DIR = "${WORKDIR}/downloads"
 
 #
 # Where to place shared-state files
@@ -94,7 +94,7 @@ DL_DIR ?= "/mnt/shared/yocto/downloads/scarthgap"
 #
 # The default is a sstate-cache directory under TOPDIR.
 #
-SSTATE_DIR ?= "/mnt/shared/yocto/sstate-cache/scarthgap"
+#SSTATE_DIR ?= "${TOPDIR}/sstate-cache"
 
 #
 # Where to place the build output
