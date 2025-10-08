@@ -50,7 +50,7 @@ do_copy_tftpboot() {
     copy_or_warn "${DEPLOY_DIR_IMAGE}/Image" "${DEST_DIR}/kernel"
 
     # Rootfs
-    copy_or_warn "${DEPLOY_DIR_IMAGE}/${PN}-${MACHINE}.rootfs.cpio" "${DEST_DIR}/rootfs.cpio"
+    copy_or_warn "${DEPLOY_DIR_IMAGE}/${PN}-${MACHINE}.rootfs.cpio.gz.u-boot" "${DEST_DIR}/rootfs.cpio.gz.u-boot"
 
     # Boot script
     copy_or_warn "${DEPLOY_DIR_IMAGE}/boot.scr" "${DEST_DIR}/boot.scr"
@@ -66,7 +66,7 @@ do_copy_tftpboot() {
 }
 #Ensures the task always runs.
 do_copy_tftpboot[nostamp] = "1"
-addtask copy_tftpboot after do_deploy before do_build
+addtask copy_tftpboot after do_image_complete before do_build
 
 
 # Function to copy the .WIC.XZ image to export/image
