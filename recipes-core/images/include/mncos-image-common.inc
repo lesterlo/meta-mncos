@@ -6,6 +6,7 @@ COMMON_INSTALL = " \
     libubootenv \
     openssl \
     jq \
+    util-linux \
     "
 LIB_COMMON_INSTALL = " \
     net-snmp \
@@ -21,6 +22,8 @@ APP_COMMON_INSTALL = " \
     lighttpd \
     openssh \
     htop \
+    tar \
+    xz \
     "
 
 IMAGE_INSTALL:append = " \
