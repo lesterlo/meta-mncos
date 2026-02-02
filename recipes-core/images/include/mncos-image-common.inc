@@ -19,7 +19,7 @@ LIB_COMMON_INSTALL = " \
 
 APP_COMMON_INSTALL = " \
     wireguard-tools \
-    lighttpd \
+    nginx \
     openssh \
     htop \
     tar \
