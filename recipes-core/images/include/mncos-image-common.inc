@@ -7,6 +7,8 @@ COMMON_INSTALL = " \
     openssl \
     jq \
     util-linux \
+    net-tools \
+    traceroute \
     "
 LIB_COMMON_INSTALL = " \
     net-snmp \
