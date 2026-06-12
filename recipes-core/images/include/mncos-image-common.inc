@@ -23,7 +23,7 @@ APP_COMMON_INSTALL = " \
     wireguard-tools \
     nginx \
     worker-user \
-    msys-nginx-config \
+    webengine \
     openssh \
     htop \
     tar \
