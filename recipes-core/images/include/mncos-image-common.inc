@@ -22,6 +22,8 @@ LIB_COMMON_INSTALL = " \
 APP_COMMON_INSTALL = " \
     wireguard-tools \
     nginx \
+    worker-user \
+    msys-nginx-config \
     openssh \
     htop \
     tar \
