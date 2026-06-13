@@ -13,19 +13,17 @@ LIC_FILES_CHKSUM = "file://../LICENSE;md5=bea232fc293d2909c632f6cdc3edc644"
 # Both build COMMITTED state: for cloud the branch must be pushed; for local,
 # commit your changes (use devtool/externalsrc if you need the live work tree).
 WEBENGINE_SRC ?= "cloud"
-WEBENGINE_GIT_BRANCH ?= "staging"
+WEBENGINE_GIT_BRANCH ?= "feature/new_glaze_install_method"
 WEBENGINE_LOCAL_DIR  ?= "/opt/monutchee/test/Nginx-front-back-end-interaction-demo"
 
 WEBENGINE_REPO_cloud = "git://github.com/lesterlo/Nginx-front-back-end-demo.git;protocol=https;branch=${WEBENGINE_GIT_BRANCH};name=webengine;destsuffix=git"
 WEBENGINE_REPO_local = "git://${WEBENGINE_LOCAL_DIR};protocol=file;branch=${WEBENGINE_GIT_BRANCH};name=webengine;destsuffix=git"
 
-SRC_URI = "${@d.getVar('WEBENGINE_REPO_' + (d.getVar('WEBENGINE_SRC') or 'cloud'))} \
-           file://0001-cmake-use-system-glaze-package.patch \
-"
+SRC_URI = "${@d.getVar('WEBENGINE_REPO_' + (d.getVar('WEBENGINE_SRC') or 'cloud'))}"
 
-# Pinned to the feature/deploy_modification tip for a reproducible build. Bump
+# Pinned to the feature/new_glaze_install_method tip for a reproducible build. Bump
 # this (or point it at a release tag's commit) when you cut a stable version.
-SRCREV_webengine = "8300aea0c5b0374ef258c837e653a10cb1f9f161"
+SRCREV_webengine = "9f69c81b67cb7f0106ceef64fccce09f9ad235de"
 PV = "1.0+git${SRCPV}"
 
 # The CMake project lives in the repo's backend/ subdirectory.
