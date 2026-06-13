@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://../LICENSE;md5=bea232fc293d2909c632f6cdc3edc644"
 # Both build COMMITTED state: for cloud the branch must be pushed; for local,
 # commit your changes (use devtool/externalsrc if you need the live work tree).
 WEBENGINE_SRC ?= "cloud"
-WEBENGINE_GIT_BRANCH ?= "feature/deploy_modification"
+WEBENGINE_GIT_BRANCH ?= "staging"
 WEBENGINE_LOCAL_DIR  ?= "/opt/monutchee/test/Nginx-front-back-end-interaction-demo"
 
 WEBENGINE_REPO_cloud = "git://github.com/lesterlo/Nginx-front-back-end-demo.git;protocol=https;branch=${WEBENGINE_GIT_BRANCH};name=webengine;destsuffix=git"
@@ -27,7 +27,7 @@ SRC_URI = "${@d.getVar('WEBENGINE_REPO_' + (d.getVar('WEBENGINE_SRC') or 'cloud'
 
 # Pinned to the feature/deploy_modification tip for a reproducible build. Bump
 # this (or point it at a release tag's commit) when you cut a stable version.
-SRCREV_webengine = "2f6437aa75d06b87e9350babe22d229d66ac14cf"
+SRCREV_webengine = "8300aea0c5b0374ef258c837e653a10cb1f9f161"
 # glaze v7.7.1.
 SRCREV_glaze = "ae87b187e2264ad452777bca68e35595406e9dca"
 SRCREV_FORMAT = "webengine_glaze"
