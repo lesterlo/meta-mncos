@@ -1,0 +1,94 @@
+SUMMARY = "webengine — Boost.Beast API backend that owns its nginx reverse proxy"
+DESCRIPTION = "Fetches the Nginx front/back-end demo, builds the C++ backend, and \
+installs it with the on-target nginx config + web root under /opt/monutchee/msys. \
+The backend owns nginx's lifecycle (Option A); the distro nginx.service stays \
+disabled (see the nginx bbappend). A per-device self-signed TLS cert is generated \
+on first boot."
+HOMEPAGE = "https://github.com/lesterlo/Nginx-front-back-end-demo"
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://../LICENSE;md5=bea232fc293d2909c632f6cdc3edc644"
+
+# Source switch: "cloud" (GitHub, default) or "local" (a git checkout).
+# Flip in local.conf:  WEBENGINE_SRC = "local"
+# Both use the git fetcher, so glaze is pre-fetched the same way in either mode.
+# Both build COMMITTED state: for cloud the branch must be pushed; for local,
+# commit your changes (use devtool/externalsrc if you need the live work tree).
+WEBENGINE_SRC ?= "cloud"
+WEBENGINE_GIT_BRANCH ?= "staging"
+WEBENGINE_LOCAL_DIR  ?= "/opt/monutchee/test/Nginx-front-back-end-interaction-demo"
+
+WEBENGINE_REPO_cloud = "git://github.com/lesterlo/Nginx-front-back-end-demo.git;protocol=https;branch=${WEBENGINE_GIT_BRANCH};name=webengine;destsuffix=git"
+WEBENGINE_REPO_local = "git://${WEBENGINE_LOCAL_DIR};protocol=file;branch=${WEBENGINE_GIT_BRANCH};name=webengine;destsuffix=git"
+
+# The C++ build FetchContent's glaze at configure time; Yocto's do_compile has no
+# network, so pre-fetch glaze here and point CMake at it (FETCHCONTENT_SOURCE_DIR_*).
+SRC_URI = "${@d.getVar('WEBENGINE_REPO_' + (d.getVar('WEBENGINE_SRC') or 'cloud'))} \
+           git://github.com/stephenberry/glaze.git;protocol=https;nobranch=1;name=glaze;destsuffix=glaze"
+
+# Pinned to the feature/deploy_modification tip for a reproducible build. Bump
+# this (or point it at a release tag's commit) when you cut a stable version.
+SRCREV_webengine = "8300aea0c5b0374ef258c837e653a10cb1f9f161"
+# glaze v7.7.1.
+SRCREV_glaze = "ae87b187e2264ad452777bca68e35595406e9dca"
+SRCREV_FORMAT = "webengine_glaze"
+
+PV = "1.0+git${SRCPV}"
+
+# The CMake project lives in the repo's backend/ subdirectory.
+S = "${WORKDIR}/git/backend"
+
+DEPENDS = "boost openssl"
+RDEPENDS:${PN} = "worker-user nginx openssl-bin"
+
+inherit cmake systemd
+
+SYSTEMD_SERVICE:${PN} = "beast-backend.service"
+# Start the backend at boot; it brings nginx up.
+SYSTEMD_AUTO_ENABLE = "enable"
+
+# Build Release and use the pre-fetched glaze instead of a network FetchContent.
+EXTRA_OECMAKE = "-DCMAKE_BUILD_TYPE=Release -DFETCHCONTENT_SOURCE_DIR_GLAZE=${WORKDIR}/glaze"
+
+do_install() {
+    # 1. The backend binary (CMake emits it at the build root). The repo's unit
+    #    expects /usr/local/bin/backend; install to ${bindir} and repoint it.
+    install -d ${D}${bindir}
+    install -m 0755 ${B}/backend ${D}${bindir}/backend
+
+    # 2. systemd unit (from the repo), repointed at ${bindir}.
+    install -d ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/git/systemd/beast-backend.service \
+                    ${D}${systemd_system_unitdir}/beast-backend.service
+    sed -i 's,/usr/local/bin/backend,${bindir}/backend,' \
+        ${D}${systemd_system_unitdir}/beast-backend.service
+
+    # 3. nginx config + web root under /opt/monutchee/msys, plus the TLS runtime dir.
+    install -d ${D}/opt/monutchee/msys/conf/webserver/www
+    install -d ${D}/opt/monutchee/msys/runtime/webserver/ssl
+    install -m 0644 ${WORKDIR}/git/nginx/nginx.target.conf \
+                    ${D}/opt/monutchee/msys/conf/webserver/nginx.conf
+    cp -R ${WORKDIR}/git/www/. ${D}/opt/monutchee/msys/conf/webserver/www/
+}
+
+FILES:${PN} += " \
+    ${bindir}/backend \
+    /opt/monutchee/msys/conf/webserver \
+    /opt/monutchee/msys/runtime/webserver \
+"
+
+# Ownership + per-device TLS cert must happen on the device (where `worker` exists
+# and we want a unique key), so run on first boot, not at rootfs-assembly time.
+pkg_postinst_ontarget:${PN}() {
+    set -e
+    SSLDIR=/opt/monutchee/msys/runtime/webserver/ssl
+    if [ ! -f "$SSLDIR/server.crt" ]; then
+        openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
+            -keyout "$SSLDIR/server.key" -out "$SSLDIR/server.crt" \
+            -subj "/CN=mncos" -addext "subjectAltName=DNS:mncos"
+    fi
+    # worker owns the config dir (so NginxController can write listen.conf there)
+    # and the ssl dir + key (so the worker-run nginx can read the cert).
+    chown worker:worker /opt/monutchee/msys/conf/webserver
+    chown -R worker:worker "$SSLDIR"
+    chmod 600 "$SSLDIR/server.key"
+}
