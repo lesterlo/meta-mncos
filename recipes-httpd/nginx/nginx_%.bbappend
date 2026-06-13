@@ -1,3 +1,6 @@
+# The webengine nginx configuration uses auth_request to gate protected files.
+PACKAGECONFIG:append:pn-nginx = " http-auth-request"
+
 # Do not auto-start nginx at boot.
 #
 # In the front/back-end design the C++ backend OWNS its reverse proxy: it
