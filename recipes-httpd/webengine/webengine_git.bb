@@ -27,7 +27,7 @@ SRC_URI = "${@d.getVar('WEBENGINE_REPO_' + (d.getVar('WEBENGINE_SRC') or 'cloud'
 
 # Pinned to the feature/deploy_modification tip for a reproducible build. Bump
 # this (or point it at a release tag's commit) when you cut a stable version.
-SRCREV_webengine = "c4addd5c4210fcbe80ebd519c5e5bd789c3cbbfa"
+SRCREV_webengine = "2f6437aa75d06b87e9350babe22d229d66ac14cf"
 # glaze v7.7.1.
 SRCREV_glaze = "ae87b187e2264ad452777bca68e35595406e9dca"
 SRCREV_FORMAT = "webengine_glaze"
