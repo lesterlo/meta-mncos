@@ -57,8 +57,7 @@ WEBENGINE_GIT_BRANCH ?= "feature/deploy_modification"
 
 ## Notes
 
-- The backend's `CMakeLists.txt` pulls **glaze** via `FetchContent` at configure
-  time. Yocto's `do_compile` has no network, so the recipe pre-fetches glaze
-  (`SRCREV_glaze`) and points CMake at it with `-DFETCHCONTENT_SOURCE_DIR_GLAZE`.
-  Bump `SRCREV_glaze` if the upstream `GIT_TAG` in `CMakeLists.txt` changes.
-- `DEPENDS = boost openssl`; `RDEPENDS = worker-user nginx openssl-bin`.
+- Glaze is packaged separately by `recipes-support/glaze/glaze_7.7.1.bb`. The
+  webengine CMake patch uses `find_package(glaze CONFIG REQUIRED)`, so all source
+  downloads happen in Yocto's fetch phase rather than during CMake configure.
+- `DEPENDS = boost glaze openssl`; `RDEPENDS = worker-user nginx openssl-bin`.
