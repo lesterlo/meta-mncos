@@ -47,7 +47,7 @@ building to test them. If you need to iterate on uncommitted edits, use
 
 ```
 SRCREV_webengine = "<commit sha>"     # in webengine_git.bb
-WEBENGINE_GIT_BRANCH ?= "feature/deploy_modification"
+WEBENGINE_GIT_BRANCH ?= "feature/new_glaze_install_method"
 ```
 
 - Bump `SRCREV_webengine` whenever you push new commits you want picked up.
@@ -57,8 +57,7 @@ WEBENGINE_GIT_BRANCH ?= "feature/deploy_modification"
 
 ## Notes
 
-- The backend's `CMakeLists.txt` pulls **glaze** via `FetchContent` at configure
-  time. Yocto's `do_compile` has no network, so the recipe pre-fetches glaze
-  (`SRCREV_glaze`) and points CMake at it with `-DFETCHCONTENT_SOURCE_DIR_GLAZE`.
-  Bump `SRCREV_glaze` if the upstream `GIT_TAG` in `CMakeLists.txt` changes.
-- `DEPENDS = boost openssl`; `RDEPENDS = worker-user nginx openssl-bin`.
+- Glaze is packaged separately by `recipes-support/glaze/glaze_7.7.1.bb`. The
+  upstream webengine CMake project uses `find_package(glaze CONFIG REQUIRED)`,
+  so all source downloads happen in Yocto's fetch phase.
+- `DEPENDS = boost glaze openssl`; `RDEPENDS = worker-user nginx openssl-bin`.

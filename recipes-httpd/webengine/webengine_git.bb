@@ -10,7 +10,6 @@ LIC_FILES_CHKSUM = "file://../LICENSE;md5=bea232fc293d2909c632f6cdc3edc644"
 
 # Source switch: "cloud" (GitHub, default) or "local" (a git checkout).
 # Flip in local.conf:  WEBENGINE_SRC = "local"
-# Both use the git fetcher, so glaze is pre-fetched the same way in either mode.
 # Both build COMMITTED state: for cloud the branch must be pushed; for local,
 # commit your changes (use devtool/externalsrc if you need the live work tree).
 WEBENGINE_SRC ?= "cloud"
@@ -20,24 +19,17 @@ WEBENGINE_LOCAL_DIR  ?= "/opt/monutchee/test/Nginx-front-back-end-interaction-de
 WEBENGINE_REPO_cloud = "git://github.com/lesterlo/Nginx-front-back-end-demo.git;protocol=https;branch=${WEBENGINE_GIT_BRANCH};name=webengine;destsuffix=git"
 WEBENGINE_REPO_local = "git://${WEBENGINE_LOCAL_DIR};protocol=file;branch=${WEBENGINE_GIT_BRANCH};name=webengine;destsuffix=git"
 
-# The C++ build FetchContent's glaze at configure time; Yocto's do_compile has no
-# network, so pre-fetch glaze here and point CMake at it (FETCHCONTENT_SOURCE_DIR_*).
-SRC_URI = "${@d.getVar('WEBENGINE_REPO_' + (d.getVar('WEBENGINE_SRC') or 'cloud'))} \
-           git://github.com/stephenberry/glaze.git;protocol=https;nobranch=1;name=glaze;destsuffix=glaze"
+SRC_URI = "${@d.getVar('WEBENGINE_REPO_' + (d.getVar('WEBENGINE_SRC') or 'cloud'))}"
 
-# Pinned to the feature/deploy_modification tip for a reproducible build. Bump
+# Pinned to the feature/new_glaze_install_method tip for a reproducible build. Bump
 # this (or point it at a release tag's commit) when you cut a stable version.
-SRCREV_webengine = "8300aea0c5b0374ef258c837e653a10cb1f9f161"
-# glaze v7.7.1.
-SRCREV_glaze = "ae87b187e2264ad452777bca68e35595406e9dca"
-SRCREV_FORMAT = "webengine_glaze"
-
+SRCREV_webengine = "1af756989575e2cd4814e41c8feb361cef85bd9e"
 PV = "1.0+git${SRCPV}"
 
 # The CMake project lives in the repo's backend/ subdirectory.
 S = "${WORKDIR}/git/backend"
 
-DEPENDS = "boost openssl"
+DEPENDS = "boost glaze openssl"
 RDEPENDS:${PN} = "worker-user nginx openssl-bin"
 
 inherit cmake systemd
@@ -46,8 +38,7 @@ SYSTEMD_SERVICE:${PN} = "beast-backend.service"
 # Start the backend at boot; it brings nginx up.
 SYSTEMD_AUTO_ENABLE = "enable"
 
-# Build Release and use the pre-fetched glaze instead of a network FetchContent.
-EXTRA_OECMAKE = "-DCMAKE_BUILD_TYPE=Release -DFETCHCONTENT_SOURCE_DIR_GLAZE=${WORKDIR}/glaze"
+EXTRA_OECMAKE = "-DCMAKE_BUILD_TYPE=Release"
 
 do_install() {
     # 1. The backend binary (CMake emits it at the build root). The repo's unit
