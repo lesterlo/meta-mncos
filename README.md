@@ -20,6 +20,13 @@ For example, `meta-zuboard` adds the ZynqMP JTAG/TFTP export and guarded eMMC
 writer. An i.MX machine layer can append the same image with the packages and
 formats required by NXP UUU.
 
+Both the main and production-flash images identify themselves on the serial
+login banner and in `/etc/mncos-image-info`. On a running target, use:
+
+```sh
+cat /etc/mncos-image-info
+```
+
 ## Reference
 
 - https://github.com/meta-homeassistant

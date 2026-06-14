@@ -2,7 +2,10 @@ SUMMARY = "Generic MNCOS production flashing image"
 DESCRIPTION = "Vendor-neutral RAM-resident base image extended by each machine layer with its production flashing implementation."
 LICENSE = "MIT"
 
-inherit core-image
+inherit core-image mncos-image-identity
+
+MNCOS_IMAGE_ROLE = "production-flash"
+MNCOS_IMAGE_LABEL = "MNCOS PRODUCTION FLASH IMAGE"
 
 # Machine and product layers extend this variable with the packages that know
 # how to fetch, validate and install that product's production image.
