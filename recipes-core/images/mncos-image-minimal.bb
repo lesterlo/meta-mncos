@@ -3,6 +3,11 @@ LICENSE = "MIT"
 
 require include/mncos-image-common.inc
 
+inherit mncos-image-identity
+
+MNCOS_IMAGE_ROLE = "main"
+MNCOS_IMAGE_LABEL = "MNCOS MAIN SYSTEM IMAGE"
+
 
 # Function to copy the .WIC.XZ image to export/image
 do_copy_wic_image() {
