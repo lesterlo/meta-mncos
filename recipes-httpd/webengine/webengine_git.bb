@@ -23,7 +23,7 @@ SRC_URI = "${@d.getVar('WEBENGINE_REPO_' + (d.getVar('WEBENGINE_SRC') or 'cloud'
 
 # Pinned to the feature/new_glaze_install_method tip for a reproducible build. Bump
 # this (or point it at a release tag's commit) when you cut a stable version.
-SRCREV_webengine = "ec36c6cc0fe4bd13ed513855bd9f989b51a27b27"
+SRCREV_webengine = "5cb0a0259b45974cf652e30ccf31ebad588bdd23"
 PV = "1.0+git${SRCPV}"
 
 # The CMake project lives in the repo's backend/ subdirectory.
