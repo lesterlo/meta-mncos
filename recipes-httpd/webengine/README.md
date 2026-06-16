@@ -5,7 +5,7 @@ Builds the C++ Boost.Beast backend from the **Nginx front/back-end demo**
 web stack:
 
 - `backend` → `${bindir}/backend`, started by `beast-backend.service` (enabled at boot)
-- `nginx.target.conf` → `/opt/monutchee/msys/conf/webserver/nginx.conf` + the web root
+- `nginx.target.conf` → `/opt/monutchee/mncos/conf/webserver/nginx.conf` + the web root
 - the `worker`-owned `conf/webserver` and `runtime/webserver/ssl` dirs, plus a
   per-device self-signed TLS cert generated on first boot
 

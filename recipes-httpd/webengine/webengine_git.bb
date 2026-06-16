@@ -1,6 +1,6 @@
 SUMMARY = "webengine — Boost.Beast API backend that owns its nginx reverse proxy"
 DESCRIPTION = "Fetches the Nginx front/back-end demo, builds the C++ backend, and \
-installs it with the on-target nginx config + web root under /opt/monutchee/msys. \
+installs it with the on-target nginx config + web root under /opt/monutchee/mncos. \
 The backend owns nginx's lifecycle (Option A); the distro nginx.service stays \
 disabled (see the nginx bbappend). A per-device self-signed TLS cert is generated \
 on first boot."
@@ -40,6 +40,8 @@ SYSTEMD_AUTO_ENABLE = "enable"
 
 EXTRA_OECMAKE = "-DCMAKE_BUILD_TYPE=Release"
 
+WEBENGINE_INSTALL_ROOT ?= "/opt/monutchee/mncos"
+
 do_install() {
     # 1. The backend binary (CMake emits it at the build root). The repo's unit
     #    expects /usr/local/bin/backend; install to ${bindir} and repoint it.
@@ -53,25 +55,29 @@ do_install() {
     sed -i 's,/usr/local/bin/backend,${bindir}/backend,' \
         ${D}${systemd_system_unitdir}/beast-backend.service
 
-    # 3. nginx config + web root under /opt/monutchee/msys, plus the TLS runtime dir.
-    install -d ${D}/opt/monutchee/msys/conf/webserver/www
-    install -d ${D}/opt/monutchee/msys/runtime/webserver/ssl
+    # 3. nginx config + web root under WEBENGINE_INSTALL_ROOT, plus the TLS runtime dir.
+    install -d ${D}${WEBENGINE_INSTALL_ROOT}/conf/webserver/www
+    install -d ${D}${WEBENGINE_INSTALL_ROOT}/runtime/webserver/ssl
     install -m 0644 ${WORKDIR}/git/nginx/nginx.target.conf \
-                    ${D}/opt/monutchee/msys/conf/webserver/nginx.conf
-    cp -R ${WORKDIR}/git/www/. ${D}/opt/monutchee/msys/conf/webserver/www/
+                    ${D}${WEBENGINE_INSTALL_ROOT}/conf/webserver/nginx.conf
+    cp -R ${WORKDIR}/git/www/. ${D}${WEBENGINE_INSTALL_ROOT}/conf/webserver/www/
+
+    sed -i 's,/opt/monutchee/msys,${WEBENGINE_INSTALL_ROOT},g' \
+        ${D}${systemd_system_unitdir}/beast-backend.service \
+        ${D}${WEBENGINE_INSTALL_ROOT}/conf/webserver/nginx.conf
 }
 
 FILES:${PN} += " \
     ${bindir}/backend \
-    /opt/monutchee/msys/conf/webserver \
-    /opt/monutchee/msys/runtime/webserver \
+    ${WEBENGINE_INSTALL_ROOT}/conf/webserver \
+    ${WEBENGINE_INSTALL_ROOT}/runtime/webserver \
 "
 
 # Ownership + per-device TLS cert must happen on the device (where `worker` exists
 # and we want a unique key), so run on first boot, not at rootfs-assembly time.
 pkg_postinst_ontarget:${PN}() {
     set -e
-    SSLDIR=/opt/monutchee/msys/runtime/webserver/ssl
+    SSLDIR=${WEBENGINE_INSTALL_ROOT}/runtime/webserver/ssl
     if [ ! -f "$SSLDIR/server.crt" ]; then
         openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
             -keyout "$SSLDIR/server.key" -out "$SSLDIR/server.crt" \
@@ -79,7 +85,7 @@ pkg_postinst_ontarget:${PN}() {
     fi
     # worker owns the config dir (so NginxController can write listen.conf there)
     # and the ssl dir + key (so the worker-run nginx can read the cert).
-    chown worker:worker /opt/monutchee/msys/conf/webserver
+    chown worker:worker ${WEBENGINE_INSTALL_ROOT}/conf/webserver
     chown -R worker:worker "$SSLDIR"
     chmod 600 "$SSLDIR/server.key"
 }
