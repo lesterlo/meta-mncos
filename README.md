@@ -1,5 +1,10 @@
 # meta-mncos
 
+
+> [!NOTE]
+> The repo is moved to [HERE](https://github.com/lesterlo/meta-monutchee)
+
+
 This layer contains vendor-neutral MNCOS distribution, application and image
 definitions. Machine layers provide hardware-specific boot and flashing logic.
 
